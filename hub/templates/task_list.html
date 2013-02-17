@@ -1,0 +1,19 @@
+<html>
+
+<head>
+<link media="screen" type="text/css" href="{{ STATIC_URL }}styles/style.css" rel="stylesheet"/ >
+</head>
+
+<body>
+
+<div class="menu">
+<a href="{% url tasks/list/completed %}">Completed</a>
+<a href="{% url tasks/list/in_progress %}">In Progress</a>
+</div>
+
+
+{{ task_list }}
+
+</body>
+
+</html>

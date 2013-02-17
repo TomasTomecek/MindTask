@@ -1,0 +1,12 @@
+<div class="list_item" style="background-color: {{ model.color }}; margin-left: {{ indent }}em">
+    <div>
+        {% if model.progress %}
+        <span class="box bg_{{ model.progress_text }}">{{ model.progress_nice_text }}</span>
+        {% endif %}
+        {% for tag in model.tags.all %}
+        <span class="box {{ tag.tag.name }}">{{ tag.tag.name }}</span>
+        {% endfor %}
+        <span class="list_path">({{ model.path }})</span>
+    </div>
+    <div>{{ model.text }}</div>
+</div>

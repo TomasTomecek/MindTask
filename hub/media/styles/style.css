@@ -1,0 +1,43 @@
+.list_item {
+    border: 1px solid #666;
+    padding: 0.5em;
+    margin: 0.5em;
+    box-shadow: 0 0 3px #888;
+}
+
+.list_path {
+    color: #666;
+}
+
+.box {
+    padding: 4px;
+    margin: 3px;
+    font-weaight: bold;
+    background-color: #999;
+}
+
+/* STYLES */
+
+.bg_START {
+    background-color: #99FFAA;
+}
+
+.bg_WORKING {
+    background-color: #DD66FF;
+}
+
+.bg_HALF {
+    background-color: #FFFF77;
+}
+
+.bg_NEAR_COMPLETE {
+    background-color: #88FF66;
+}
+
+.bg_COMPLETED {
+    background-color: #33FF55;
+}
+
+.bg_PAUSE {
+    background-color: #FF9999;
+}
