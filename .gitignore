@@ -1,3 +1,6 @@
 .spyderproject
 *.py[co]
 *.png
+*.log
+*.pot
+local_settings.py
