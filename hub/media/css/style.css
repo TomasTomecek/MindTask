@@ -41,3 +41,20 @@
 .bg_PAUSE {
     background-color: #FF9999;
 }
+
+#order_by {
+    text-align: center;
+}
+
+#order_by a {
+    margin: 0 0.5em;
+}
+
+#login {
+    float: right;
+}
+
+#login span, #login a {
+    padding: 5px;
+    background-color: rgb(255, 148, 102)
+}

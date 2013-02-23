@@ -33,6 +33,9 @@ class Stream(models.Model):
     name = models.CharField(max_length=32)
     color = models.SlugField(max_length=6)
 
+    def __unicode__(self):
+        return u"#%d %s" % (self.id, self.name)
+
 
 class Component(models.Model):
     name = models.CharField(max_length=64)
@@ -80,6 +83,7 @@ class Task(Entry):
                                            blank=True, null=True)
     progress = models.PositiveIntegerField(choices=PROGRESS.get_mapping(),
                                            blank=True, null=True)
+    # change this to N:N
     stream = models.ForeignKey(Stream, blank=True, null=True)
     name = models.CharField(max_length=32, blank=True, null=True)
     mmap = models.ForeignKey(MindMap, blank=True, null=True)

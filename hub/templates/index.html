@@ -23,10 +23,19 @@
         <div class="header-container">
             <header class="wrapper clearfix">
                 <h1 class="title">MindTask</h1>
+                <div id="login">
+                {% if user.is_authenticated %}
+                <span>{{ user.username }}</span>
+                    <a href="{% url reg/logout %}">logout</a>
+                {% else %}
+                    <a href="{% url reg/login %}">login</a>
+                {% endif %}
+                </div>
                 <nav>
                     <ul>
-                        <li><a href="{% url tasks/list/completed %}">Completed</a></li>
-                        <li><a href="{% url tasks/list/in_progress %}">In Progress</a></li>
+                        {% for stream in streams %}
+                        <li><a href="{% url tasks/list/stream stream.name %}">{{ stream.name.capitalize }}</a></li>
+                        {% endfor %}
                     </ul>
                 </nav>
             </header>

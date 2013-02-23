@@ -2,6 +2,13 @@
 
 {% block content %}
 
+<div id="order_by">
+Order by:
+<a href="{% url tasks/list/stream/order_by stream.name "color" order %}">by color</a> |
+<a href="{% url tasks/list/stream/order_by stream.name "progress" order %}">by progress</a> |
+<a href="{% url tasks/list/stream/order_by stream.name "date_created" order %}">by date</a>
+</div>
+
 {{ task_list }}
 
 {% endblock %}

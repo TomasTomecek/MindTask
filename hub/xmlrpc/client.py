@@ -18,6 +18,7 @@ def hello(request):
 
 
 def add_tasks(request, tasks):
+    # TODO set streams, at least default ones like completed, active
     for t in tasks:
         task = Task()
         task.text = t['title']
@@ -30,4 +31,5 @@ def add_tasks(request, tasks):
 
 
 def sync_tasks(request):
+    # TODO this is now priority number one
     return ""

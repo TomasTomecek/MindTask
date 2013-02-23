@@ -7,5 +7,6 @@ urlpatterns = patterns('',
     url(r"^xmlrpc/", include("xmlrpc.urls")),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^tasks/', include('tasks.urls'))
+    url(r'^tasks/', include('tasks.urls')),
+    url(r"^registration/", include("reg.urls")),
 )
