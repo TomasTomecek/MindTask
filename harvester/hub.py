@@ -7,6 +7,11 @@ from xmind import get_tasks
 
 from xmlrpclib import Fault
 
+import zlib
+import cPickle as pickle
+import base64
+
+
 def fault_repr(self):
     return "<Fault %s: %s>" % (self.faultCode, str(self.faultString))
 Fault.__repr__ = fault_repr
@@ -31,6 +36,4 @@ if __name__ == '__main__':
 
     print client.client.hello()
 
-    #for t in tasks:
-    #    print t
-    client.client.add_tasks(tasks)
+    client.client.sync_tasks(base64.encodestring(zlib.compress(pickle.dumps(tasks))))

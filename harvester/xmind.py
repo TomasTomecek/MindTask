@@ -7,8 +7,14 @@ __all__ = (
     'get_tasks',
 )
 
-TASK_MARKERS = ('task-start', 'task-quarter', 'task-half', 'task-3quar',
-                'task-done', 'task-pause',)
+TASK_MARKERS = {
+    'task-start': 'START',
+    'task-quarter': 'QUARTER',
+    'task-half': 'HALF',
+    'task-3quar': 'ALMOST',
+    'task-done': 'DONE',
+    'task-pause': 'PAUSE',
+}
 
 
 def find_topic(topic, title):
@@ -23,24 +29,31 @@ def is_topic_task(topic):
         if marker in TASK_MARKERS:
             return marker
 
+def translate_progress(marker):
+    return TASK_MARKERS[marker]
+
 def get_children_from_topic(topic, path):
     children = []
 
     for child in topic.get_subtopics():
         title = child.get_title()
-
         item = {
-            'markers': list(topic.get_markers()),
             'title': title,
             'path': path,
             'background': topic.get_background_color(),
             'children': get_children_from_topic(child, path + [title]),
         }
 
-        if is_topic_task(topic):
+        markers = list(topic.get_markers())
+        task_marker = is_topic_task(topic)
+        if task_marker:
+            markers.remove(task_marker)
             item['type'] = 'task'
+            item['progress'] = translate_progress(task_marker)
         else:
             item['type'] = 'comment'
+
+        item['markers'] = markers
 
         children.append(item)
 
@@ -57,10 +70,13 @@ def get_tasks_from_sheet(sheet, ignore_children=False):
     while options:
         topic, path = options.pop()
         title = topic.get_title()
-        if is_topic_task(topic):
-
+        task_marker = is_topic_task(topic)
+        if task_marker:
+            markers = list(topic.get_markers())
+            markers.remove(task_marker)
             task = {
-                'markers': list(topic.get_markers()),
+                'progress': translate_progress(task_marker),
+                'markers': markers,
                 'title': title,
                 'path': path,
                 'background': topic.get_background_color(),
