@@ -28,6 +28,15 @@ PROGRESS = Enum(
     EnumItem("PAUSE", help_text="Pause"),
 )
 
+PROGRESS_TRANSLATION = {
+    'START': PROGRESS["START"],
+    'QUARTER': PROGRESS["WORKING"],
+    'HALF': PROGRESS["HALF"],
+    'ALMOST': PROGRESS["NEAR_COMPLETE"],
+    'DONE': PROGRESS["COMPLETED"],
+    'PAUSE': PROGRESS["PAUSE"],
+}
+
 TASK_TYPE = Enum(
     EnumItem("WEBUI", help_text="Web"),
     EnumItem("MINDMAP", help_text="MindMap"),
@@ -38,6 +47,7 @@ ACTIONS = Enum(
     EnumItem("NEW", help_text="New"),
     EnumItem("DELETE", help_text="Delete"),
     EnumItem("EDIT", help_text="Edit"),
+    EnumItem("PROGRESS_UPDATE", help_text="Progress changed"),
 )
 
 ##

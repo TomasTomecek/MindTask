@@ -83,7 +83,7 @@ class Task(Entry):
                                            blank=True, null=True)
     progress = models.PositiveIntegerField(choices=PROGRESS.get_mapping(),
                                            blank=True, null=True)
-    # change this to N:N
+    # TODO change this to N:N
     stream = models.ForeignKey(Stream, blank=True, null=True)
     name = models.CharField(max_length=32, blank=True, null=True)
     mmap = models.ForeignKey(MindMap, blank=True, null=True)
@@ -113,8 +113,6 @@ class TagBinding(models.Model):
     content_object = generic.GenericForeignKey('content_type', 'object_id')
 
 
-
-
 class History(models.Model):
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
@@ -122,6 +120,13 @@ class History(models.Model):
     action = models.PositiveIntegerField(choices=ACTIONS.get_mapping(),
                                          blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
+    key = models.CharField(max_length=16, blank=True, null=True)
+    value = models.CharField(max_length=64, blank=True, null=True)
+
+    def __unicode__(self):
+        return u"%s (%s)" % (self.content_object,
+                             ACTIONS.get_value(self.action))
+
 
 class Remote(models.Model):
     hostname = models.CharField(max_length=64)
