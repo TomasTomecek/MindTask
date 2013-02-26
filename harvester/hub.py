@@ -12,6 +12,11 @@ import cPickle as pickle
 import base64
 
 
+__all__ = (
+    'sync_file',
+)
+
+
 def fault_repr(self):
     return "<Fault %s: %s>" % (self.faultCode, str(self.faultString))
 Fault.__repr__ = fault_repr
@@ -24,6 +29,17 @@ def connect(url):
     return xmlrpclib.ServerProxy(url, allow_none=True, transport=tc,
                                  verbose=0)
 
+
+def sync_file(xmlrpc_url, path):
+    client = connect(xmlrpc_url)
+    tasks = get_tasks(path)
+    client.client.sync_tasks(
+        base64.encodestring(
+            zlib.compress(
+                pickle.dumps(tasks)
+            )
+        )
+    )
 
 if __name__ == '__main__':
     xmlrpc_url = "http://127.0.0.1:8000/xmlrpc/client/"
