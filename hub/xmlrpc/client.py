@@ -35,6 +35,9 @@ def sync_tasks(request, mmap):
     mm, mm_created = MindMap.objects.get_or_create(user=u,
                                                    filename=mmap['file_name'])
 
+    mm.last_synced = datetime.datetime.now()
+    mm.save()
+
     for s in mmap['sheets']:
         sheet, sh_create = Sheet.objects.get_or_create(mind_map=mm,
                                                        title=s['title'])

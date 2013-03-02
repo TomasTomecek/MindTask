@@ -65,7 +65,7 @@ body {
 }
 
 .wrapper {
-    /*width: 90%;*/
+    width: 90%;
     margin: 0 5%;
 }
 
@@ -258,7 +258,7 @@ nav a:hover {
    =============== */
 
     .wrapper {
-        width: 1026px; /* 1140px - 10% for margins */
+        /*width: 1026px; /* 1140px - 10% for margins */
         margin: 0 auto;
     }
 }

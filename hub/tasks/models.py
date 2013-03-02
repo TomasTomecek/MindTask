@@ -27,7 +27,7 @@ class MindMap(models.Model):
     last_synced = models.DateTimeField(blank=True, null=True)
 
     def __unicode__(self):
-        return u"#%d %s %s" % (self.id, self.name, self.last_synced)
+        return u"#%d %s %s" % (self.id, self.filename, self.last_synced)
 
 
 class Sheet(models.Model):
