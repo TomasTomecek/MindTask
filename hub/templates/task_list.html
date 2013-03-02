@@ -19,7 +19,7 @@ Order by:
 
 {% for map in maps %}
 <div class="map">
-    {{ map.filename }}
+    {{ map.filename }} ({{ map.last_synced|date:"j. b. G:i" }})
     {% for sheet in map.sheets.all %}
     <div class="sheet">
         {#<a href="{% url %}">{{ sheet. }}</a>#}

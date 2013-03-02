@@ -65,8 +65,8 @@ body {
 }
 
 .wrapper {
-    width: 90%;
-    margin: 0 5%;
+    width: 95%;
+    margin: 0 3%;
 }
 
 /* ===================
@@ -137,7 +137,7 @@ nav a:hover {
 
 .main aside {
     color: white;
-    padding: 1em 5%;
+    padding: 1em 2%;
 }
 
 .footer-container footer {
