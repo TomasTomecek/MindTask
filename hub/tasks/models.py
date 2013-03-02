@@ -40,7 +40,7 @@ class Sheet(models.Model):
 
 class Stream(models.Model):
     name = models.CharField(max_length=32)
-    color = models.SlugField(max_length=6)
+    color = models.SlugField(max_length=7)
 
     def __unicode__(self):
         return u"#%d %s" % (self.id, self.name)
@@ -48,17 +48,17 @@ class Stream(models.Model):
 
 class Component(models.Model):
     name = models.CharField(max_length=64)
-    color = models.SlugField(max_length=6)
+    color = models.SlugField(max_length=7)
 
 
 class Tag(models.Model):
     name = models.CharField(max_length=32)
-    color = models.SlugField(max_length=6)
+    color = models.SlugField(max_length=7)
 
 
 class Entry(models.Model):
     text = models.TextField()
-    color = models.SlugField(max_length=6)
+    color = models.SlugField(max_length=7)
     path = models.CharField(max_length=255)
     content_type = models.ForeignKey(ContentType, blank=True, null=True)
     object_id = models.PositiveIntegerField(blank=True, null=True)
