@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from tasks.models import Task, History
-#from django.views.decorators.csrf import csrf_exempt
 from utils.constants import ACTIONS
 from utils.xmlrpc import *
 
