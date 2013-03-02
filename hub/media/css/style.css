@@ -16,6 +16,15 @@
     background-color: #999;
 }
 
+.wrapper .list {
+    width: 80%;
+    float: left;
+}
+
+aside div.map div.sheet {
+    margin-left: 2.5em;
+}
+
 /* STYLES */
 
 .bg_START {

@@ -9,6 +9,23 @@ Order by:
 <a href="{% url tasks/list/stream/order_by stream.name "date_created" order %}">by date</a>
 </div>
 
+<div class="list">
 {{ task_list }}
+</div>
 
+{% endblock %}
+
+{% block aside %}
+
+{% for map in maps %}
+<div class="map">
+    {{ map.filename }}
+    {% for sheet in map.sheets.all %}
+    <div class="sheet">
+        {#<a href="{% url %}">{{ sheet. }}</a>#}
+        {{ sheet.title }}
+    </div>
+    {% endfor %}
+</div>
+{% endfor %}
 {% endblock %}

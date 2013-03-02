@@ -1,6 +1,6 @@
 <div class="list_item" style="background-color: {{ model.color }}; margin-left: {{ indent }}em">
     <div>
-        {% if model.progress %}
+        {% if model.progress != None %}
         <span class="box bg_{{ model.progress_text }}">{{ model.progress_nice_text }}</span>
         {% endif %}
         {% for tag in model.tags.all %}

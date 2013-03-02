@@ -5,8 +5,9 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.safestring import mark_safe
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
 
-from models import Task, Stream
+from models import Task, Stream, UserProfile, MindMap
 
 from utils.display import display_items
 #from utils.constants import PROGRESS
@@ -16,11 +17,10 @@ from utils.display import display_items
 def task_list(request, stream_name, order_by, order):
     """
     TODO
-        add here filter also:
+        add here filters:
             all
-            completed
-            active
     """
+    user = get_object_or_404(UserProfile,user__id=request.user.id)
     if order == "up":
         o = order_by
         order = "down"
@@ -31,7 +31,8 @@ def task_list(request, stream_name, order_by, order):
         raise RuntimeError("invalid order")
     stream = Stream.objects.get(name=stream_name)
     tasks = Task.objects.filter(object_id__isnull=True,
-                                stream=stream).order_by(o)
+                                stream=stream,
+                                sheet__mind_map__user=user).order_by(o)
 
     return render_to_response(
         "task_list.html",
@@ -40,6 +41,7 @@ def task_list(request, stream_name, order_by, order):
             'streams': Stream.objects.all(),
             'stream': stream,
             'order': order,
+            'maps': MindMap.objects.filter(user=user)
         },
         context_instance=RequestContext(request)
     )

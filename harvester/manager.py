@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-
+"""
+DEPRECATED
+Uses plancake API
+"""
 
 from targets.plancake import createPlancake
 

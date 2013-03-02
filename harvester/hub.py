@@ -50,6 +50,7 @@ if __name__ == '__main__':
     path = "/home/tt/Documents/maps/personal.xmind"
 
     tasks = get_tasks(path)
+    tasks['secret'] = '762aabc0f678440b96d5f132d55f4b13'
 
     print client.client.hello()
 

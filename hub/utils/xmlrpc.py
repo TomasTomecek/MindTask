@@ -80,9 +80,10 @@ def process_tags(model, markers):
         tb.save()
 
 
-def process_children(model, children):
+def process_children(model, children, sheet):
     db_children = model.children()
     for item in children:
+        # TODO -- process them, update and remove not up to date
         if db_children.filter(text=item['title']):
             continue
         if item['type'] == 'task':
@@ -98,8 +99,9 @@ def process_children(model, children):
         m.text = item['title']
         m.path = '/'.join(item['path'])
         m.color = item['background'] or "FFFFFF"
+        m.sheet = sheet
         m.save()
         process_tags(m, item['markers'])
 
         if 'children' in item and item['children']:
-            process_children(m, item['children'])
+            process_children(m, item['children'], sheet)
