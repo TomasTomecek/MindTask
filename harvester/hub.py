@@ -42,11 +42,12 @@ def sync_file(xmlrpc_url, path):
     )
 
 if __name__ == '__main__':
-    xmlrpc_url = "http://127.0.0.1:8000/xmlrpc/client/"
+    #xmlrpc = "https://mindtask-mtstage.rhcloud.com/xmlrpc/client/"
+    xmlrpc = "http://127.0.0.1:8000/xmlrpc/client/"
 
-    client = connect(xmlrpc_url)
+    client = connect(xmlrpc)
 
-    path = "/home/tt/Documents/covscan.xmind"
+    path = "/home/tt/Documents/maps/personal.xmind"
 
     tasks = get_tasks(path)
 
