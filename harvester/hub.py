@@ -30,9 +30,10 @@ def connect(url):
                                  verbose=0)
 
 
-def sync_file(xmlrpc_url, path):
+def sync_file(xmlrpc_url, path, secret):
     client = connect(xmlrpc_url)
     tasks = get_tasks(path)
+    tasks['secret'] = secret
     client.client.sync_tasks(
         base64.encodestring(
             zlib.compress(

@@ -19,13 +19,14 @@ from harvester.hub import sync_file
 
 
 class EventHandler(FileSystemEventHandler):
-    def __init__(self, observer, xmlrpc_url):
+    def __init__(self, observer, xmlrpc_url, secret):
         self.observer = observer
         self.xmlrpc_url = xmlrpc_url
+        self.secret = secret
 
     def on_any_event(self, event):
         if isinstance(event, (FileModifiedEvent, FileCreatedEvent)):
-            sync_file(self.xmlrpc_url, event.src_path)
+            sync_file(self.xmlrpc_url, event.src_path, self.secret)
 
 
 def main():
@@ -33,12 +34,13 @@ def main():
     config.read('/etc/harvester.conf')
     path = config.get('General', 'path')
     xmlrpc_url = config.get('General', 'xmlrpc')
+    secret = config.get('General', 'secret')
 
     if not os.path.exists(path):
         return 1
 
     observer = Observer()
-    event_handler = EventHandler(observer, xmlrpc_url)
+    event_handler = EventHandler(observer, xmlrpc_url, secret)
 
     observer.schedule(event_handler, path, recursive=os.path.isdir(path))
     observer.start()
