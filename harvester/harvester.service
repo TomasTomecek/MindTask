@@ -1,0 +1,6 @@
+[Unit]
+Description=MindTask Harvester
+
+[Service]
+Type=simple
+ExecStart=/usr/lib/python2.7/site-packages/harvester/main.py
