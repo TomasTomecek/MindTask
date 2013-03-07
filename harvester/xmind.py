@@ -23,6 +23,7 @@ JSON MODEL:
 
 import os
 from mekk.xmind import XMindDocument
+from mekk.xmind.xmlutil import InternalStructureException
 
 
 __all__ = (
@@ -124,7 +125,11 @@ def get_tasks_from_xdoc(xdoc):
     sheets = []
     for s in xdoc.get_all_sheets():
         sheet = {}
-        sheet['title'] = s.get_title()
+        try:
+            sheet['title'] = s.get_title()
+        except InternalStructureException:
+            s.set_title('Unknown')
+            sheet['title'] = "Unknown"
         sheet['tasks'] = get_tasks_from_sheet(s)
         sheets.append(sheet)
     return sheets
