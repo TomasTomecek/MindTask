@@ -13,7 +13,7 @@ import ConfigParser
 
 from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
-from watchdog.events import FileModifiedEvent, FileCreatedEvent
+from watchdog.events import FileModifiedEvent, FileCreatedEvent, FileMovedEvent
 
 from harvester.hub import sync_file
 
@@ -25,8 +25,13 @@ class EventHandler(FileSystemEventHandler):
         self.secret = secret
 
     def on_any_event(self, event):
-        if isinstance(event, (FileModifiedEvent, FileCreatedEvent)):
-            sync_file(self.xmlrpc_url, event.src_path, self.secret)
+        if isinstance(event, (FileModifiedEvent, FileCreatedEvent,
+                              FileMovedEvent)):
+            try:
+                sync_file(self.xmlrpc_url, event.src_path, self.secret)
+            except Exception, e:
+                pass
+                #print 'Exception while trying to sync data to server', e
 
 
 def main():
