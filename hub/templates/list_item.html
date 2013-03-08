@@ -1,12 +1,20 @@
-<div class="list_item" style="background-color: {{ model.color }}; margin-left: {{ indent }}em">
-    <div>
-        {% if model.progress != None %}
-        <span class="box bg_{{ model.progress_text }}">{{ model.progress_nice_text }}</span>
-        {% endif %}
-        {% for tag in model.tags.all %}
+<div class="list_item" style="margin-left: {{ indent }}em;">
+{# {% if model.color != "FFFFFF" or model.color != "#FFFFFF" %} #}
+{# -webkit-linear-gradient(85deg, #F9FFB4 0%,rgba(240,255,220,0) 50%); #}
+    <p class="list_item_left left">
+        <span style="background-color: {{ model.color }};" class="priority"></span>
+        <span class="text">{{ model.text }}</span>
+        <span class="path">{{ model.display_path }}</span>
+    </p>
+
+    <p class="markers right">
+    {% for tag in model.tags.all %}
         <span class="box {{ tag.tag.name }}">{{ tag.tag.name }}</span>
-        {% endfor %}
-        <span class="list_path">({{ model.path }})</span>
-    </div>
-    <div>{{ model.text }}</div>
+    {% endfor %}
+
+    {% if model.progress != None %}
+        <span class="box bg_{{ model.progress_text }}">{{ model.progress_nice_text }}</span>
+    {% endif %}
+    </p>
+	<div style="clear: both;"></div>
 </div>

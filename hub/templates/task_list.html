@@ -29,3 +29,29 @@ Order by:
 </div>
 {% endfor %}
 {% endblock %}
+
+{% block js %}
+<script>
+$(".list_item").hover(
+  function () {
+    var priority_color = $(this).find("p.list_item_left span.priority").css("background-color");
+    var result_color = null;
+    if (priority_color == "rgba(0, 0, 0, 0)" || priority_color == "rgba(255, 255, 255, 255)") {
+      result_color = "rgba(220, 220, 220, 255)";
+    }
+    else {
+      result_color = priority_color;
+    }
+    $(this).css("background-color", result_color);
+    var path = $(this).find("p.list_item_left span.path");
+    if (path != null && path.text() != null && path.text() != "") {
+        path.css("display", "inline");
+    }
+  },
+  function () {
+    $(this).css("background-color", "white");
+    $(this).find("p.list_item_left span.path").css("display", "none");
+  }
+);
+</script>
+{% endblock %}

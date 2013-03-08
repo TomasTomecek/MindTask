@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*-
+
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.contrib.auth.models import User
 from django.db.models import Q
+from django.utils.safestring import mark_safe
 
 from utils.constants import *
 
@@ -65,6 +68,9 @@ class Entry(models.Model):
     parent = generic.GenericForeignKey('content_type', 'object_id')
     sheet = models.ForeignKey(Sheet)
 
+    # objects that have instance set as parrent
+    tags = generic.GenericRelation('TagBinding')
+
     # http://blog.roseman.org.uk/2010/02/15/django-patterns-part-3-efficient-generic-relations/
     def children(self):
         task_ct = ContentType.objects.get_for_model(Task)
@@ -78,8 +84,9 @@ class Entry(models.Model):
                 object_id=self.id,)
         )
 
-    # objects that have instance set as parrent
-    tags = generic.GenericRelation('TagBinding')
+    def display_path(self):
+        # &rarr; = →
+        return mark_safe(u" &rarr; ".join(self.path.split('/')))
 
     def __unicode__(self):
         return u"#%d %s" % (self.id, self.text[:25])
