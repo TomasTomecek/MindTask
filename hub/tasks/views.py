@@ -30,9 +30,21 @@ def task_list(request, stream_name, order_by, order):
     else:
         raise RuntimeError("invalid order")
     stream = Stream.objects.get(name=stream_name)
-    tasks = Task.objects.filter(object_id__isnull=True,
-                                stream=stream,
-                                sheet__mind_map__user=user).order_by(o)
+    if order_by != 'color':
+        tasks = Task.objects.filter(object_id__isnull=True,
+                                    stream=stream,
+                                    sheet__mind_map__user=user).order_by(o)
+    else:
+        tasks = Task.objects.filter(
+            object_id__isnull=True,
+            stream=stream,
+            sheet__mind_map__user=user)
+        tasks_list = list(tasks)
+        rev = False
+        if order == 'down':
+            rev=True
+        tasks_list.sort(key=lambda x: x.color_value(), reverse=rev)
+        tasks = tasks_list
 
     return render_to_response(
         "task_list.html",

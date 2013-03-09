@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import cPickle as pickle
+
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
@@ -61,7 +63,7 @@ class Tag(models.Model):
 
 class Entry(models.Model):
     text = models.TextField()
-    color = models.SlugField(max_length=7)
+    color = models.SlugField(max_length=34)
     path = models.CharField(max_length=255)
     content_type = models.ForeignKey(ContentType, blank=True, null=True)
     object_id = models.PositiveIntegerField(blank=True, null=True)
@@ -87,6 +89,18 @@ class Entry(models.Model):
     def display_path(self):
         # &rarr; = →
         return mark_safe(u" &rarr; ".join(self.path.split('/')))
+
+    def display_color(self):
+        c = pickle.loads(str(self.color))
+        return u"rgba(%d, %d, %d, 255)" % (c[0], c[1], c[2])
+
+    def color_value(self):
+        """
+        pickle.dumps((%d, %d, %d), ) -> %d
+        return number that represents the color for ordering
+        """
+        c = pickle.loads(str(self.color))
+        return c[0] * c[1]
 
     def __unicode__(self):
         return u"#%d %s" % (self.id, self.text[:25])

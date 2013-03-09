@@ -3,6 +3,7 @@
 from tasks.models import Task, History, MindMap, UserProfile, Sheet
 from utils.constants import ACTIONS
 from utils.xmlrpc import *
+from utils.color import process_color
 
 import datetime
 import zlib
@@ -50,7 +51,7 @@ def sync_tasks(request, mmap):
             if created:
                 task.text = t['title']
                 task.path = path
-                task.color = t['background'] or "FFFFFF"
+                task.color = process_color(t['background'] or "FFFFFF")
                 task.progress = translate_progress(t['progress'])
                 set_default_stream(task)
                 task.save()
@@ -63,7 +64,8 @@ def sync_tasks(request, mmap):
                 changed = False
                 changed |= set_atribute(task, 'text', t['title'])
                 changed |= set_atribute(task, 'path', path)
-                changed |= set_atribute(task, 'color', t['background'] or "FFFFFF")
+                changed |= set_atribute(task, 'color',
+                                        process_color(t['background'] or "FFFFFF"))
                 changed |= update_progress(task, translate_progress(t['progress']))
                 if changed:
                     task.save()

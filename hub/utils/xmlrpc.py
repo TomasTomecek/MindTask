@@ -4,8 +4,8 @@ from django.contrib.contenttypes.models import ContentType
 
 from tasks.models import *
 from utils.constants import *
+from utils.color import process_color
 
-import pdb
 
 __all__ = (
     'process_tags',
@@ -98,7 +98,7 @@ def process_children(model, children, sheet):
         m.parent = model
         m.text = item['title']
         m.path = '/'.join(item['path'])
-        m.color = item['background'] or "FFFFFF"
+        m.color = process_color(item['background'] or "FFFFFF")
         m.sheet = sheet
         m.save()
         process_tags(m, item['markers'])

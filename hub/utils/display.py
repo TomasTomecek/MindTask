@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import cPickle as pickle
+
 from django.http import HttpResponse
 from django.template import Context, loader
 from django.core.exceptions import ObjectDoesNotExist
