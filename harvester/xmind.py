@@ -60,6 +60,14 @@ def translate_progress(marker):
     return TASK_MARKERS[marker]
 
 
+def get_nice_color(c):
+    """strip leading #"""
+    if c and c.startswith('#'):
+        return c[1:]
+    else:
+        return c
+
+
 def get_children_from_topic(topic, path):
     children = []
 
@@ -68,7 +76,7 @@ def get_children_from_topic(topic, path):
         item = {
             'title': title,
             'path': path,
-            'background': topic.get_background_color(),
+            'background': get_nice_color(topic.get_background_color()),
             'children': get_children_from_topic(child, path + [title]),
         }
 
@@ -107,7 +115,7 @@ def get_tasks_from_sheet(sheet, ignore_children=False):
                 'markers': markers,
                 'title': title,
                 'path': path,
-                'background': topic.get_background_color(),
+                'background': get_nice_color(topic.get_background_color()),
             }
             if not ignore_children:
                 task['children'] = get_children_from_topic(topic,
