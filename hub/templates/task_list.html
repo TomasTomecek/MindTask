@@ -4,9 +4,9 @@
 
 <div id="order_by">
 Order by:
-<a href="{% url tasks/list/stream/order_by stream.name "color" order %}">by color</a> |
-<a href="{% url tasks/list/stream/order_by stream.name "progress" order %}">by progress</a> |
-<a href="{% url tasks/list/stream/order_by stream.name "date_created" order %}">by date</a>
+<a href="{% url tasks/list/stream/order_by/order stream.name current_map current_sheet "color" order %}">by color</a> |
+<a href="{% url tasks/list/stream/order_by/order stream.name current_map current_sheet "progress" order %}">by progress</a> |
+<a href="{% url tasks/list/stream/order_by/order stream.name current_map current_sheet "date_created" order %}">by date</a>
 </div>
 
 <div class="list">
@@ -17,13 +17,16 @@ Order by:
 
 {% block aside %}
 
+<a href="{% url tasks/list/stream stream.name %}">All</a>
+
 {% for map in maps %}
 <div class="map">
-    {{ map.filename }} ({{ map.last_synced|date:"j. b. G:i" }})
+    <a href="{% url tasks/list/stream/mmap stream.name map.id %}">{{ map.filename }}</a>
+    ({{ map.last_synced|date:"j. b. G:i" }})
     {% for sheet in map.sheets.all %}
     <div class="sheet">
-        {#<a href="{% url %}">{{ sheet. }}</a>#}
-        {{ sheet.title }}
+        <a href="{% url tasks/list/stream/mmap/sheet stream.name map.id sheet.id %}">
+        {{ sheet.title }}</a>
     </div>
     {% endfor %}
 </div>

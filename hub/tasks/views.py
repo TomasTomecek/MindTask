@@ -14,7 +14,8 @@ from utils.display import display_items
 
 
 @login_required(login_url='/registration/login/')
-def task_list(request, stream_name, order_by, order):
+def task_list(request, stream_name="active", mmap="all", sheet="all",
+              order_by="progress", order="up"):
     """
     TODO
         add here filters:
@@ -30,15 +31,20 @@ def task_list(request, stream_name, order_by, order):
     else:
         raise RuntimeError("invalid order")
     stream = Stream.objects.get(name=stream_name)
+
+    tasks = Task.objects.filter(object_id__isnull=True,
+                                stream=stream,
+                                sheet__mind_map__user=user)
+
+    if mmap != 'all':
+        tasks = tasks.filter(sheet__mind_map__id=mmap)
+
+    if sheet != 'all':
+        tasks = tasks.filter(sheet__id=sheet)
+
     if order_by != 'color':
-        tasks = Task.objects.filter(object_id__isnull=True,
-                                    stream=stream,
-                                    sheet__mind_map__user=user).order_by(o)
+        tasks = tasks.order_by(o)
     else:
-        tasks = Task.objects.filter(
-            object_id__isnull=True,
-            stream=stream,
-            sheet__mind_map__user=user)
         tasks_list = list(tasks)
         rev = False
         if order == 'down':
@@ -53,6 +59,8 @@ def task_list(request, stream_name, order_by, order):
             'streams': Stream.objects.all(),
             'stream': stream,
             'order': order,
+            'current_map': mmap,
+            'current_sheet': sheet,
             'maps': MindMap.objects.filter(user=user)
         },
         context_instance=RequestContext(request)
