@@ -27,11 +27,16 @@ class EventHandler(FileSystemEventHandler):
     def on_any_event(self, event):
         if isinstance(event, (FileModifiedEvent, FileCreatedEvent,
                               FileMovedEvent)):
+            if isinstance(event, FileMovedEvent):
+                path = event.dest_path
+            else:
+                path = event.src_path
             try:
-                sync_file(self.xmlrpc_url, event.src_path, self.secret)
+                sync_file(self.xmlrpc_url, path, self.secret)
             except Exception, e:
                 pass
-                #print 'Exception while trying to sync data to server', e
+                # TODO log it
+                # print 'Exception while trying to sync data to server', e
 
 
 def main():

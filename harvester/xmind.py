@@ -64,6 +64,8 @@ def get_nice_color(c):
     """strip leading #"""
     if c and c.startswith('#'):
         return c[1:]
+    elif not c or c == 'none':
+        return 'FFFFFF'
     else:
         return c
 
